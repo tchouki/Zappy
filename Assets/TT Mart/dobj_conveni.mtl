@@ -1,0 +1,42 @@
+# Blender MTL File: 'AnimalCrossing.blend'
+# Material Count: 4
+
+newmtl CR00_dobj_conveni_kanban_mat
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni -1.000000
+d 1.000000
+illum 2
+map_Kd cmn_dobj_conveni_kanban_JP.png
+
+newmtl CR00_dobj_conveni_main_mat
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni -1.000000
+d 1.000000
+illum 2
+map_Kd tex_dobj_conveni_main.png
+
+newmtl CR00_window_mat
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni -1.000000
+d 1.000000
+illum 2
+map_Kd cmn_dobj_conveni_window.png
+
+newmtl SH00_dobj_conveni_main_mat
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni -1.000000
+d 1.000000
+illum 2
+map_Kd tex_dobj_conveni_main.png
