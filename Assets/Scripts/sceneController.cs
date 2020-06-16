@@ -1,34 +1,26 @@
-﻿using System.Collections;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using System.Net;
+﻿using System;
 using System.Linq;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class sceneController : MonoBehaviour
 {
     private Button button;
     private Text buttonText;
     public InputField ip, port;
-    private Color32 colorBrown = new Color32(0x93, 0x6C, 0x38, 0xFF);
+    public Text linkedText;
+    private Color32 _colorBrown = new Color32(0x93, 0x6C, 0x38, 0xFF);
+    private Server.Server _server;
 
     private static bool CheckIPValid(string ip)
     {
         if (String.IsNullOrWhiteSpace(ip))
-        {
             return false;
-        }
-
         string[] splitValues = ip.Split('.');
         if (splitValues.Length != 4)
-        {
             return false;
-        }
-
-        byte tempForParsing;
-
-        return splitValues.All(r => byte.TryParse(r, out tempForParsing));
+        return splitValues.All(r => byte.TryParse(r, out _));
     }
     // Start is called before the first frame update
     void Start()
@@ -42,28 +34,38 @@ public class sceneController : MonoBehaviour
     {
     }
 
-    private bool setValidateColor(Image img, bool valid)
+    private bool SetValidateColor(Image img, bool valid)
     {
         if (!valid)
             img.color = Color.red;
         else
-            img.color = colorBrown;
+            img.color = _colorBrown;
         return (valid);
     }
 
     public void loadGameScene()
     {
-        bool validData;
         Debug.Log("IP: " + ip.text);
         Debug.Log("Port: " + port.text);
-        validData = setValidateColor(ip.image, CheckIPValid(ip.text));
-        validData = validData && setValidateColor(port.image, int.TryParse(port.text, out _));
-        if (validData)
-            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        bool validData = SetValidateColor(ip.image, CheckIPValid(ip.text));
+        validData = validData && SetValidateColor(port.image, int.TryParse(port.text, out _));
+        if (!validData)
+            return;
+        linkedText.text = "Connection...";
+        try {
+            _server = new Server.Server(ip.text, port.text);
+        } catch (Exception e) {
+            Debug.Log($"Exception occured on connection: {e}");
+            linkedText.color = Color.red;
+            linkedText.fontSize = 27;
+            linkedText.text = "An error occured. Double check the IP address and the port.";
+            return;
+        }
+        SceneManager.LoadScene(1);
     }
 
     public void loadMenuScene()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0);
     }
 }
