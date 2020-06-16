@@ -8,7 +8,9 @@ public class sceneController : MonoBehaviour
 {
     private Button button;
     private Text buttonText;
-    public InputField ip, port;
+    public InputField
+        ip,
+        port;
     public Text linkedText;
     private Color32 _colorBrown = new Color32(0x93, 0x6C, 0x38, 0xFF);
     private Server.Server _server;

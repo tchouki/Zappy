@@ -58,10 +58,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\connectionServer.cs" />
      <Compile Include="Assets\Scripts\move.cs" />
      <Compile Include="Assets\Scripts\playerControler.cs" />
      <Compile Include="Assets\Scripts\sceneController.cs" />
+     <Compile Include="Assets\Scripts\server.cs" />
      <Compile Include="Assets\Scripts\spawn_food.cs" />
      <None Include="Assets\Town Halls\readme.txt" />
      <None Include="Assets\Temple\Ancient Temple\readme.txt" />
