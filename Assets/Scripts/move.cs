@@ -32,6 +32,11 @@ public class move : MonoBehaviour
         }
     }
 
+    public void Incantation()
+    {
+        anim.SetBool("isIncantation", !anim.GetBool("isIncantation"));
+    }
+
     public void MoveCharacter()
     {
         startPosition = character.transform.position;
