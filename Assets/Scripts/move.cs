@@ -7,20 +7,23 @@ public class move : MonoBehaviour
     public GameObject character;
     static private float angle = 270;
     static private Vector3 pos;
-    float t;
-    float timeToReachTarget;
-    Vector3 startPosition;
+    static float t;
+    static float timeToReachTarget;
+    static Vector3 startPosition;
     public Animator anim;
 
     void Start()
     {
         startPosition = character.transform.position;
         pos = startPosition;
+        t = 0;
+        timeToReachTarget = 1.5f;
     }
 
     void Update()
     {
-        t += Time.deltaTime/timeToReachTarget;
+        t += Time.deltaTime/1.5f;
+        Debug.Log($"Exception occured on connection: {t}");
         character.transform.position = Vector3.Lerp(startPosition, pos, t);
         if (character.transform.position != pos)
         {
@@ -41,7 +44,6 @@ public class move : MonoBehaviour
     {
         startPosition = character.transform.position;
         t = 0;
-        timeToReachTarget = 1.5f;
         if (angle == 0)
         {
             pos = new Vector3 (character.transform.position.x, character.transform.position.y, character.transform.position.z + 1);
