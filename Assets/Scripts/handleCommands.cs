@@ -2,213 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class player
-{
-    public int X;
-    public int Y;
-    public int n;
-    public int O;
-    public GameObject Nook;
-
-    public player(int x, int y, int _n, int o, GameObject _nook)
-    {
-        X = x;
-        Y = y;
-        n = _n;
-        O = o;
-        Nook = _nook;
-    }
-}
-
-public class team
-{
-    public string name;
-    public List<player> players = new List<player>();
-
-    public team(string teamName)
-    {
-        name = teamName;
-        players = new List<player>();
-    }
-
-    public void addPlayer(player newPlayer)
-    {
-        players.Add(newPlayer);
-    }
-}
-
-public class egg
-{
-    public int X;
-    public int Y;
-    public int e;
-    public string teamName;
-    public GameObject Egg;
-
-    public egg(int x, int y, int _e, string _teamName, GameObject _egg)
-    {
-        X = x;
-        Y = y;
-        e = _e;
-        teamName = _teamName;
-        Egg = _egg;
-    }
-}
-
-public class cube : MonoBehaviour
-{
-    public int X;
-    public int Y;
-    public int nbr_q0;
-    public int nbr_q1;
-    public int nbr_q2;
-    public int nbr_q3;
-    public int nbr_q4;
-    public int nbr_q5;
-    public int nbr_q6;
-    public List<GameObject> ressources;
-
-    public cube(int x, int y, int _nbr_q0, int _nbr_q1, int _nbr_q2, int _nbr_q3, int _nbr_q4, int _nbr_q5, int _nbr_q6)
-    {
-        X = x;
-        Y = y;
-        nbr_q0 = _nbr_q0;
-        nbr_q1 = _nbr_q1;
-        nbr_q2 = _nbr_q2;
-        nbr_q3 = _nbr_q3;
-        nbr_q4 = _nbr_q4;
-        nbr_q5 = _nbr_q5;
-        nbr_q6 = _nbr_q6;
-        ressources = new List<GameObject>();
-    }
-
-    public void addItem(GameObject _new)
-    {
-        ressources.Add(_new);
-    }
-
-    public void addRessources(int _nbr_q0, int _nbr_q1, int _nbr_q2, int _nbr_q3, int _nbr_q4, int _nbr_q5, int _nbr_q6)
-    {
-        nbr_q0 = _nbr_q0;
-        nbr_q1 = _nbr_q1;
-        nbr_q2 = _nbr_q2;
-        nbr_q3 = _nbr_q3;
-        nbr_q4 = _nbr_q4;
-        nbr_q5 = _nbr_q5;
-        nbr_q6 = _nbr_q6;   
-    }
-
-    public void removeRessource(int nbr)
-    {
-        if (nbr == 0) {
-            nbr_q0--;
-            foreach (var item in ressources) {
-                if (item.tag == "Q0") {
-                    Destroy(item);
-                    ressources.RemoveAt(ressources.IndexOf(item));
-                    return;
-                }
-            }
-        }
-        if (nbr == 1) {
-            nbr_q1--;
-            foreach (var item in ressources) {
-                if (item.tag == "Q1") {
-                    Destroy(item);
-                    ressources.RemoveAt(ressources.IndexOf(item));
-                    return;
-                }
-            }
-        }
-        if (nbr == 2) {
-            nbr_q2--;
-            foreach (var item in ressources) {
-                if (item.tag == "Q2") {
-                    Destroy(item);
-                    ressources.RemoveAt(ressources.IndexOf(item));
-                    return;
-                }
-            }
-        }
-        if (nbr == 3) {
-            nbr_q3--;
-            foreach (var item in ressources) {
-                if (item.tag == "Q3") {
-                    Destroy(item);
-                    ressources.RemoveAt(ressources.IndexOf(item));
-                    return;
-                }
-            }
-        }
-        if (nbr == 4) {
-            nbr_q4--;
-            foreach (var item in ressources) {
-                if (item.tag == "Q4") {
-                    Destroy(item);
-                    ressources.RemoveAt(ressources.IndexOf(item));
-                    return;
-                }
-            }
-        }
-        if (nbr == 5) {
-            nbr_q5--;
-            foreach (var item in ressources) {
-                if (item.tag == "Q5") {
-                    Destroy(item);
-                    ressources.RemoveAt(ressources.IndexOf(item));
-                    return;
-                }
-            }
-        }
-        if (nbr == 6) {
-            nbr_q6--;
-            foreach (var item in ressources) {
-                if (item.tag == "Q6") {
-                    Destroy(item);
-                    ressources.RemoveAt(ressources.IndexOf(item));
-                    return;
-                }
-            }
-        }
-    }
-
-    public void dropRessource(int nbr)
-    {
-        if (nbr == 0)
-            nbr_q0++;
-        if (nbr == 1)
-            nbr_q1++;
-        if (nbr == 2)
-            nbr_q2++;
-        if (nbr == 3)
-            nbr_q3++;
-        if (nbr == 4)
-            nbr_q4++;
-        if (nbr == 5)
-            nbr_q5++;
-        if (nbr == 6)
-            nbr_q6++;
-    }
-}
-
-public class map
-{
-    public int X;
-    public int Y;
-    public List<cube> all = new List<cube>();
-
-    public map(int x, int y)
-    {
-        X = x;
-        Y = y;
-    }
-
-    public void addCube(cube newCube)
-    {
-        all.Add(newCube);
-    }
-}
-
 public class handleCommands : MonoBehaviour
 {
     public GameObject egg;
@@ -222,41 +15,51 @@ public class handleCommands : MonoBehaviour
     public GameObject Q5;
     public GameObject Q6;
     public int TimeUnit;
-    public string TeamName;
-
     public List<egg> all_eggs;
     public List<team> all_teams;
     public map all_blocks;
+    public GameObject _server;
+    public string dialogMessage;
+    
+    float t;
     // Start is called before the first frame update
     void Start()
     {
+        t = 0;
         all_eggs = new List<egg>();
         all_teams = new List<team>();
+        dialogMessage = "";
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public void test_map()
-    {
-        MSG_MSZ(10, 5);
-        MSG_BCT(0, 0, 2, 0, 0, 0 ,0 ,0 , 0);
-        MSG_BCT(1, 1, 2, 0, 0, 0 ,0 ,0 , 0);
-        MSG_BCT(4, 3, 0, 1 ,0, 0, 0 ,0 ,0);
-        MSG_TNA("yp");
-        MSG_PWN(0, 1, 1, 3, 1, "yp");
-        MSG_PWN(1, 5, 3, 3, 1, "yp");
-        MSG_PPO(0, 0, 0, 0);
-        MSG_PDI(1);
-        MSG_PGT(0, 0);
-        MSG_PGT(0, 0);
-        MSG_PDR(0, 1);
-        MSG_PFK(0);
-        //MSG_EHT(0);
-        MSG_PPO(0, 1, 1, 0);
+        t += Time.deltaTime/2f;
+        if (t > 2f && t < 3f) {
+            MSG_MSZ(10, 5);
+            MSG_BCT(0, 0, 2, 0, 0, 0 ,0 ,0 , 0);
+            MSG_BCT(1, 1, 2, 0, 0, 0 ,0 ,0 , 0);
+            MSG_BCT(4, 3, 0, 1 ,0, 0, 0 ,0 ,0);
+            MSG_TNA("yp");
+            MSG_PWN(0, 1, 1, 3, 1, "yp");
+            MSG_PWN(1, 5, 3, 3, 1, "yp");
+            //MSG_PDI(1);
+            //MSG_PGT(0, 0);
+            //MSG_PGT(0, 0);
+            //MSG_PDR(0, 1);
+            //MSG_PFK(0);
+            //MSG_EHT(0);
+            //MSG_PPO(0, 1, 1, 0);
+            //MSG_PBC(0, "yoyoyoyoyoyoyo");
+            //MSG_PIC(0, 0, 0, 0);
+            t = 10f;
+        }
+        if (t > 12f && t < 13f) {
+            MSG_PPO(0, 0, 0, 1);
+            MSG_PPO(1, 9, 4, 1);
+            t = 20f;
+        }
+        Debug.Log(_server.GetComponent<sceneController>().receivedMessage);
     }
 
     void MSG_MSZ(int x, int y)
@@ -332,7 +135,8 @@ public class handleCommands : MonoBehaviour
                     player.X = X;
                     player.Y = Y;
                     player.O = O;
-                    player.Nook.transform.position = new Vector3(X, 0.5f, Y);
+                    Debug.Log("prev move");
+                    player.Nook.GetComponent<move>().MoveCharacter(X, Y, O);
                     return;
                 }
             }
@@ -354,7 +158,7 @@ public class handleCommands : MonoBehaviour
 
     void MSG_PBC(int n, string M)
     {
-        //TODO
+        dialogMessage = M;
     }
 
     void MSG_PIN(int n, int X, int Y, int q0, int q1, int q2, int q3, int q4, int q5, int q6)
@@ -430,7 +234,13 @@ public class handleCommands : MonoBehaviour
 
     void MSG_PIC(int X, int Y, int L, int n)
     {
-        //TODO
+        foreach (var team in all_teams) {
+            foreach (var player in team.players) {
+                if (player.n == n) {
+                    player.Nook.GetComponent<move>().Incantation();
+                }
+            }
+        }
     }
 
     void MSG_PIE(int X, int Y, int R)

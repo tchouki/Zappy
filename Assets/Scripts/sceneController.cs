@@ -15,6 +15,11 @@ public class sceneController : MonoBehaviour
     private Color32 _colorBrown = new Color32(0x93, 0x6C, 0x38, 0xFF);
     private Server.Server _server;
 
+    public GameObject _menu;
+    public GameObject _game;
+    private bool isConnected;
+    public string receivedMessage;
+
     private static bool CheckIPValid(string ip)
     {
         if (String.IsNullOrWhiteSpace(ip))
@@ -29,11 +34,18 @@ public class sceneController : MonoBehaviour
     {
         button = GetComponent<Button>();
         buttonText = GetComponentInChildren<Text>();
+        _menu.SetActive(true);
+        _game.SetActive(false);
+        isConnected = false;
+        receivedMessage = "";
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isConnected == true) {
+            receivedMessage = _server.ReceiveMsg();
+        }
     }
 
     private bool SetValidateColor(Image img, bool valid)
@@ -63,7 +75,9 @@ public class sceneController : MonoBehaviour
             linkedText.text = "An error occured. Double check the IP address and the port.";
             return;
         }
-        SceneManager.LoadScene(1);
+        _menu.SetActive(false);
+        _game.SetActive(true);
+        isConnected = true;
     }
 
     public void loadMenuScene()

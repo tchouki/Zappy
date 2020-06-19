@@ -6,17 +6,21 @@ using UnityEngine.UI;
 public class dialog : MonoBehaviour
 {
 
-    public Text getText;
+    public GameObject _game;
     public Text Dialog_field;
 
     public GameObject Dialog;
     public AudioSource Sound;
     // Start is called before the first frame update
-    public void sendDialog()
+    private string saveDialog = "";
+    void Update()
     {
-        Dialog.SetActive(true);
-        Dialog_field.text = getText.text;
-        Sound.Play();
+        if (saveDialog != _game.GetComponent<handleCommands>().dialogMessage) {
+            Dialog.SetActive(true);
+            Dialog_field.text = _game.GetComponent<handleCommands>().dialogMessage;
+            Sound.Play();
+            saveDialog = _game.GetComponent<handleCommands>().dialogMessage;
+        }
     }
 
     public void desactiveDialog()

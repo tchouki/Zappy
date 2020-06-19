@@ -5,33 +5,26 @@ using UnityEngine;
 public class move : MonoBehaviour
 {
     public Transform character;
-    static private float angle = 270;
-    static private Vector3 pos;
-    static float t;
-    static float timeToReachTarget;
-    static Vector3 startPosition;
+    private Vector3 pos;
+    float t;
+    Vector3 startPosition;
     public Animator anim;
 
     void Start()
     {
-//        startPosition = character.position;
-//        pos = startPosition;
-//        t = 0;
-//        timeToReachTarget = 1.5f;
+        startPosition = character.position;
+        pos = startPosition;
+        t = 0;
     }
 
     void Update()
     {
-//        t += Time.deltaTime/1.5f;
-//        character.position = Vector3.Lerp(startPosition, pos, t);
+        t += Time.deltaTime/1.5f;
+        character.position = Vector3.Lerp(startPosition, pos, t);
         if (character.position != pos)
-        {
             anim.SetBool("isWalking", true);
-        }
         else
-        {
             anim.SetBool("isWalking", false);
-        }
     }
 
     public void Incantation()
@@ -39,48 +32,18 @@ public class move : MonoBehaviour
         anim.SetBool("isIncantation", !anim.GetBool("isIncantation"));
     }
 
-    public void MoveCharacter()
+    public void MoveCharacter(int X, int Y, int O)
     {
         startPosition = character.position;
         t = 0;
-        if (angle == 0)
-        {
-            pos = new Vector3 (character.position.x, character.position.y, character.position.z + 1);
-
-        }
-        if (angle == 90)
-        {
-            pos = new Vector3 (character.position.x + 1, character.position.y, character.position.z);
-
-        }
-        if (angle == 180)
-        {
-            pos = new Vector3 (character.position.x, character.position.y, character.position.z - 1);
-
-        }
-        if (angle == 270)
-        {
-            pos = new Vector3 (character.position.x - 1, character.position.y, character.position.z);
-        }
-    }
-
-    public void LeftCharacter()
-    {
-        angle -= 90;
-        if (angle == -90)
-        {
-            angle = 270;
-        }
-        character.eulerAngles = new Vector3 (0, angle, 0);
-    }
-
-    public void RightCharacter()
-    {
-        angle += 90;
-        if (angle == 360)
-        {
-            angle = 0;
-        }
-        character.eulerAngles = new Vector3 (0, angle, 0);
+        pos = new Vector3 (X, character.position.y, Y);
+        if (O == 1)
+            character.eulerAngles = new Vector3(0, 0, 0);
+        if (O == 2)
+            character.eulerAngles = new Vector3(0, 90, 0);
+        if (O == 3)
+            character.eulerAngles = new Vector3(0, 180, 0);
+        if (O == 4)
+            character.eulerAngles = new Vector3(0, 270, 0);
     }
 }
