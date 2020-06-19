@@ -23,7 +23,7 @@ public class move : MonoBehaviour
     void Update()
     {
         t += Time.deltaTime/1.5f;
-        Debug.Log($"Exception occured on connection: {t}");
+        // Debug.Log($"Exception occured on connection: {t}");
         character.transform.position = Vector3.Lerp(startPosition, pos, t);
         if (character.transform.position != pos)
         {

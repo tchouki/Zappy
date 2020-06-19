@@ -7,12 +7,17 @@ using UnityEngine;
 namespace Server
 {    public class Server
     {
-        private Socket _socket;
+        private readonly Socket _socket;
+        public const string InvalidRead = "READ_NOTHING_LEFT";
 
         public string ReceiveMsg()
         {
-            Byte[] bytes = new byte[256];
-            return Encoding.ASCII.GetString(bytes, 0, _socket.Receive(bytes, bytes.Length, 0));
+            try  {
+                Byte[] bytes = new byte[256];
+                return Encoding.ASCII.GetString(bytes, 0, _socket.Receive(bytes, bytes.Length, 0));
+            } catch (SocketException)  {
+                return InvalidRead;
+            }
         }
 
         public void SendMsg(string request)
@@ -27,6 +32,7 @@ namespace Server
             var endpoint = new IPEndPoint(serverIp, int.Parse(port));
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _socket.Connect(endpoint);
+            _socket.Blocking = false;
         }
     }
 }
