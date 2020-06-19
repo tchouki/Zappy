@@ -1374,7 +1374,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 95b9b5a405470f540beb4edfa4dec215, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.208
   m_Pitch: 1
   Loop: 1
@@ -1579,7 +1579,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 925fde92a10e23e47a282d567d9aba7d, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.574
   m_Pitch: 1
   Loop: 1
@@ -3018,7 +3018,7 @@ GameObject:
   - component: {fileID: 1885563050}
   - component: {fileID: 1885563049}
   m_Layer: 0
-  m_Name: LoopServer
+  m_Name: ServerLoop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
