@@ -57,6 +57,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Server.cs" />
      <Compile Include="Assets\Scripts\dialog.cs" />
+     <Compile Include="Assets\Scripts\handleCommands.cs" />
      <Compile Include="Assets\Scripts\move.cs" />
      <Compile Include="Assets\Scripts\playerControler.cs" />
      <Compile Include="Assets\Scripts\sceneController.cs" />

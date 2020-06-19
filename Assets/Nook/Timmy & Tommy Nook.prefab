@@ -2858,6 +2858,7 @@ GameObject:
   - component: {fileID: 4309146568221139798}
   - component: {fileID: 7141710516395211825}
   - component: {fileID: 7141710516395211838}
+  - component: {fileID: 7461413092328398624}
   m_Layer: 0
   m_Name: Timmy & Tommy Nook
   m_TagString: Untagged
@@ -2938,3 +2939,17 @@ CapsuleCollider:
   m_Height: 0.2737744
   m_Direction: 1
   m_Center: {x: 0, y: 0.1294068, z: 0}
+--- !u!114 &7461413092328398624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7141710516395211839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66610626cf5bb2b4aa82e266c9f66224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 7141710516395211824}
+  anim: {fileID: 4309146568221139798}

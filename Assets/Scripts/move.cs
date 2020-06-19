@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class move : MonoBehaviour
 {
-    public GameObject character;
+    public Transform character;
     static private float angle = 270;
     static private Vector3 pos;
     static float t;
@@ -14,18 +14,17 @@ public class move : MonoBehaviour
 
     void Start()
     {
-        startPosition = character.transform.position;
-        pos = startPosition;
-        t = 0;
-        timeToReachTarget = 1.5f;
+//        startPosition = character.position;
+//        pos = startPosition;
+//        t = 0;
+//        timeToReachTarget = 1.5f;
     }
 
     void Update()
     {
-        t += Time.deltaTime/1.5f;
-        Debug.Log($"Exception occured on connection: {t}");
-        character.transform.position = Vector3.Lerp(startPosition, pos, t);
-        if (character.transform.position != pos)
+//        t += Time.deltaTime/1.5f;
+//        character.position = Vector3.Lerp(startPosition, pos, t);
+        if (character.position != pos)
         {
             anim.SetBool("isWalking", true);
         }
@@ -42,26 +41,26 @@ public class move : MonoBehaviour
 
     public void MoveCharacter()
     {
-        startPosition = character.transform.position;
+        startPosition = character.position;
         t = 0;
         if (angle == 0)
         {
-            pos = new Vector3 (character.transform.position.x, character.transform.position.y, character.transform.position.z + 1);
+            pos = new Vector3 (character.position.x, character.position.y, character.position.z + 1);
 
         }
         if (angle == 90)
         {
-            pos = new Vector3 (character.transform.position.x + 1, character.transform.position.y, character.transform.position.z);
+            pos = new Vector3 (character.position.x + 1, character.position.y, character.position.z);
 
         }
         if (angle == 180)
         {
-            pos = new Vector3 (character.transform.position.x, character.transform.position.y, character.transform.position.z - 1);
+            pos = new Vector3 (character.position.x, character.position.y, character.position.z - 1);
 
         }
         if (angle == 270)
         {
-            pos = new Vector3 (character.transform.position.x - 1, character.transform.position.y, character.transform.position.z);
+            pos = new Vector3 (character.position.x - 1, character.position.y, character.position.z);
         }
     }
 
@@ -72,7 +71,7 @@ public class move : MonoBehaviour
         {
             angle = 270;
         }
-        character.transform.eulerAngles = new Vector3 (0, angle, 0);
+        character.eulerAngles = new Vector3 (0, angle, 0);
     }
 
     public void RightCharacter()
@@ -82,6 +81,6 @@ public class move : MonoBehaviour
         {
             angle = 0;
         }
-        character.transform.eulerAngles = new Vector3 (0, angle, 0);
+        character.eulerAngles = new Vector3 (0, angle, 0);
     }
 }
