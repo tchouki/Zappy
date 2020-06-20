@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class handleCommands : MonoBehaviour
 {
@@ -14,52 +15,76 @@ public class handleCommands : MonoBehaviour
     public GameObject Q4;
     public GameObject Q5;
     public GameObject Q6;
-    public int TimeUnit;
+    public Text endText;
+    public float TimeUnit;
     public List<egg> all_eggs;
     public List<team> all_teams;
     public map all_blocks;
     public GameObject _server;
     public string dialogMessage;
-    
+    private string serverMessage;
+    private bool finish;    
     float t;
     // Start is called before the first frame update
     void Start()
     {
+        finish = false;
         t = 0;
+        TimeUnit = 0f;
         all_eggs = new List<egg>();
         all_teams = new List<team>();
         dialogMessage = "";
+        serverMessage = _server.GetComponent<sceneController>().receivedMessage;
     }
 
     // Update is called once per frame
     void Update()
     {
-        t += Time.deltaTime/2f;
-        if (t > 2f && t < 3f) {
-            MSG_MSZ(10, 5);
-            MSG_BCT(0, 0, 2, 0, 0, 0 ,0 ,0 , 0);
-            MSG_BCT(1, 1, 2, 0, 0, 0 ,0 ,0 , 0);
-            MSG_BCT(4, 3, 0, 1 ,0, 0, 0 ,0 ,0);
-            MSG_TNA("yp");
-            MSG_PWN(0, 1, 1, 3, 1, "yp");
-            MSG_PWN(1, 5, 3, 3, 1, "yp");
-            //MSG_PDI(1);
-            //MSG_PGT(0, 0);
-            //MSG_PGT(0, 0);
-            //MSG_PDR(0, 1);
-            //MSG_PFK(0);
-            //MSG_EHT(0);
-            //MSG_PPO(0, 1, 1, 0);
-            //MSG_PBC(0, "yoyoyoyoyoyoyo");
-            //MSG_PIC(0, 0, 0, 0);
-            t = 10f;
+        t += Time.deltaTime;
+        serverMessage += _server.GetComponent<sceneController>().receivedMessage;
+        if (t >= TimeUnit && finish == false) {
+            t = t % 1f;
+            int index = serverMessage.IndexOf('\n');
+            if (index == -1)
+                return;
+            string serverAction = serverMessage.Substring(0, index);
+            serverMessage = serverMessage.Substring(index + 1);
+            string[] tokens = serverAction.Split(' ');
+            if (tokens[0] == "msz")
+                MSG_MSZ(int.Parse(tokens[1]), int.Parse(tokens[2]));
+            if (tokens[0] == "bct")
+                MSG_BCT(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), int.Parse(tokens[4]), int.Parse(tokens[5]), int.Parse(tokens[6]), int.Parse(tokens[7]), int.Parse(tokens[8]), int.Parse(tokens[9]));
+            if (tokens[0] == "sgt")
+                MSG_SGT(int.Parse(tokens[1]));
+            if (tokens[0] == "tna")
+                MSG_TNA(tokens[1]);
+            if (tokens[0] == "pwn")
+                MSG_PWN(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), int.Parse(tokens[4]), int.Parse(tokens[5]), tokens[6]);
+            if (tokens[0] == "ppo")
+                MSG_PPO(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), int.Parse(tokens[4]));
+            if (tokens[0] == "pdi")
+                MSG_PDI(int.Parse(tokens[1]));
+            if (tokens[0] == "pbc")
+                MSG_PBC(int.Parse(tokens[1]), serverAction.Substring(5));
+            if (tokens[0] == "pgt")
+                MSG_PGT(int.Parse(tokens[1]), int.Parse(tokens[2]));
+            if (tokens[0] == "pdr")
+                MSG_PDR(int.Parse(tokens[1]), int.Parse(tokens[2]));
+            if (tokens[0] == "pex")
+                MSG_PEX(int.Parse(tokens[1]));
+            if (tokens[0] == "pic")
+                MSG_PIC(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]), int.Parse(tokens[4]));
+            if (tokens[0] == "pie")
+                MSG_PIE(int.Parse(tokens[1]), int.Parse(tokens[2]), int.Parse(tokens[3]));
+            if (tokens[0] == "pfk")
+                MSG_PFK(int.Parse(tokens[1]));
+            if (tokens[0] == "eht")
+                MSG_EHT(int.Parse(tokens[1]));
+            if (tokens[0] == "ebo")
+                MSG_EBO(int.Parse(tokens[1]));
+            if (tokens[0] == "seg")
+                MSG_SEG(tokens[1]);
         }
-        if (t > 12f && t < 13f) {
-            MSG_PPO(0, 0, 0, 1);
-            MSG_PPO(1, 9, 4, 1);
-            t = 20f;
-        }
-        Debug.Log(_server.GetComponent<sceneController>().receivedMessage);
     }
 
     void MSG_MSZ(int x, int y)
@@ -99,7 +124,7 @@ public class handleCommands : MonoBehaviour
 
     void MSG_SGT(int T)
     {
-        TimeUnit = T;
+        TimeUnit = T / 100;
     }
 
     void MSG_TNA(string name)
@@ -112,15 +137,14 @@ public class handleCommands : MonoBehaviour
         Vector3 orientation = new Vector3(0, 0, 0);
 
         if (O == 1)
-            orientation = new Vector3(0, 0, 0);
+            orientation = new Vector3(0, 180, 0);
         if (O == 2)
             orientation = new Vector3(0, 90, 0);
         if (O == 3)
-            orientation = new Vector3(0, 180, 0);
+            orientation = new Vector3(0, 0, 0);
         if (O == 4)
             orientation = new Vector3(0, 270, 0);
         foreach (var team in all_teams) {
-            Debug.Log(team.name);
             if (team.name == N) {
                 team.addPlayer(new player(X, Y, n, O, Instantiate(player, new Vector3(X, 0.5f, Y), Quaternion.Euler(orientation))));
             }
@@ -135,7 +159,6 @@ public class handleCommands : MonoBehaviour
                     player.X = X;
                     player.Y = Y;
                     player.O = O;
-                    Debug.Log("prev move");
                     player.Nook.GetComponent<move>().MoveCharacter(X, Y, O);
                     return;
                 }
@@ -258,7 +281,7 @@ public class handleCommands : MonoBehaviour
                 if (player.n == n) {
                     newX = player.X;
                     newY = player.Y;
-                    all_eggs.Add(new egg(newX, newY, n, team.name, Instantiate(egg, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0)))));
+                    all_eggs.Add(new egg(newX, newY, n, team.name, Instantiate(egg, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,180,0)))));
                 }
             }
         }
@@ -286,5 +309,7 @@ public class handleCommands : MonoBehaviour
 
     void MSG_SEG(string N)
     {
+        finish = true;
+        endText.text = "Winner is " + N;
     }
 }

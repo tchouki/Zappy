@@ -38,11 +38,11 @@ public class move : MonoBehaviour
         t = 0;
         pos = new Vector3 (X, character.position.y, Y);
         if (O == 1)
-            character.eulerAngles = new Vector3(0, 0, 0);
+            character.eulerAngles = new Vector3(0, 180, 0);
         if (O == 2)
             character.eulerAngles = new Vector3(0, 90, 0);
         if (O == 3)
-            character.eulerAngles = new Vector3(0, 180, 0);
+            character.eulerAngles = new Vector3(0, 0, 0);
         if (O == 4)
             character.eulerAngles = new Vector3(0, 270, 0);
     }

@@ -16,7 +16,7 @@ namespace Server
                 Byte[] bytes = new byte[256];
                 return Encoding.ASCII.GetString(bytes, 0, _socket.Receive(bytes, bytes.Length, 0));
             } catch (SocketException)  {
-                return InvalidRead;
+                return "";
             }
         }
 
@@ -32,6 +32,7 @@ namespace Server
             var endpoint = new IPEndPoint(serverIp, int.Parse(port));
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _socket.Connect(endpoint);
+            _socket.Send(Encoding.ASCII.GetBytes("GRAPHIC\n"));
             _socket.Blocking = false;
         }
     }
