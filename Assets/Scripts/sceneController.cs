@@ -17,6 +17,7 @@ public class sceneController : MonoBehaviour
 
     public GameObject _menu;
     public GameObject _game;
+    private GameObject _saveGame;
     private bool isConnected;
     public string receivedMessage;
 
@@ -36,8 +37,10 @@ public class sceneController : MonoBehaviour
         buttonText = GetComponentInChildren<Text>();
         _menu.SetActive(true);
         _game.SetActive(false);
+        _saveGame = _game;
         isConnected = false;
         receivedMessage = "";
+
     }
 
     // Update is called once per frame
@@ -46,6 +49,9 @@ public class sceneController : MonoBehaviour
         if (isConnected == true) {
             receivedMessage = _server.ReceiveMsg();
         }
+        if (Input.GetKeyDown("escape"))
+            loadMenuScene();
+
     }
 
     private bool SetValidateColor(Image img, bool valid)
@@ -82,6 +88,8 @@ public class sceneController : MonoBehaviour
 
     public void loadMenuScene()
     {
-        SceneManager.LoadScene(0);
+        _game = _saveGame;
+        _menu.SetActive(true);
+        _game.SetActive(false);
     }
 }

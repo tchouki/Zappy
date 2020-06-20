@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Class\Map.cs" />
      <Compile Include="Assets\Scripts\Class\Player.cs" />
      <Compile Include="Assets\Scripts\Class\Team.cs" />
+     <Compile Include="Assets\Scripts\Quit.cs" />
      <Compile Include="Assets\Scripts\Server.cs" />
      <Compile Include="Assets\Scripts\dialog.cs" />
      <Compile Include="Assets\Scripts\handleCommands.cs" />

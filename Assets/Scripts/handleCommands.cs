@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class handleCommands : MonoBehaviour
 {
+    public Transform parent;
     public GameObject egg;
     public GameObject player;
     public GameObject block;
@@ -16,6 +17,7 @@ public class handleCommands : MonoBehaviour
     public GameObject Q5;
     public GameObject Q6;
     public Text endText;
+    public Text logText;
     public float TimeUnit;
     public List<egg> all_eggs;
     public List<team> all_teams;
@@ -48,6 +50,11 @@ public class handleCommands : MonoBehaviour
             if (index == -1)
                 return;
             string serverAction = serverMessage.Substring(0, index);
+            int count = logText.text.Split('\n').Length - 1;
+            if (count >= 10)
+                logText.text = "";
+            logText.text += serverAction + "\n";
+
             serverMessage = serverMessage.Substring(index + 1);
             string[] tokens = serverAction.Split(' ');
             if (tokens[0] == "msz")
@@ -92,7 +99,7 @@ public class handleCommands : MonoBehaviour
         all_blocks = new map(x, y);
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                Instantiate(block, new Vector3(i, 0, j), Quaternion.Euler(new Vector3(0,0,0)));
+                Instantiate(block, new Vector3(i, 0, j), Quaternion.Euler(new Vector3(0,0,0)), parent);
                 all_blocks.addCube(new cube(i, j, 0, 0, 0, 0, 0 , 0, 0));
             }
         }
@@ -104,19 +111,19 @@ public class handleCommands : MonoBehaviour
             if (cube.X == X && cube.Y == Y) {
                 cube.addRessources(q0, q1, q2, q3, q4, q5, q6);
                 for (int i = 0; i < q0; i++)
-                    cube.addItem(Instantiate(Q0, new Vector3(X, 0.5f, Y), Quaternion.Euler(new Vector3(0,0,0))));
+                    cube.addItem(Instantiate(Q0, new Vector3(X - 0.25f, 0.5f, Y - 0.25f), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 for (int i = 0; i < q1; i++)
-                    cube.addItem(Instantiate(Q1, new Vector3(X, 0.5f, Y), Quaternion.Euler(new Vector3(0,0,0))));
+                    cube.addItem(Instantiate(Q1, new Vector3(X - 0.25f, 0.5f, Y), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 for (int i = 0; i < q2; i++)
-                    cube.addItem(Instantiate(Q2, new Vector3(X, 0.5f, Y), Quaternion.Euler(new Vector3(0,0,0))));
+                    cube.addItem(Instantiate(Q2, new Vector3(X, 0.5f, Y - 0.25f), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 for (int i = 0; i < q3; i++)
-                    cube.addItem(Instantiate(Q3, new Vector3(X, 0.5f, Y), Quaternion.Euler(new Vector3(0,0,0))));
+                    cube.addItem(Instantiate(Q3, new Vector3(X, 0.5f, Y), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 for (int i = 0; i < q4; i++)
-                    cube.addItem(Instantiate(Q4, new Vector3(X, 0.5f, Y), Quaternion.Euler(new Vector3(0,0,0))));
+                    cube.addItem(Instantiate(Q4, new Vector3(X - 0.25f, 0.5f, Y + 0.25f), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 for (int i = 0; i < q5; i++)
-                    cube.addItem(Instantiate(Q5, new Vector3(X, 0.5f, Y), Quaternion.Euler(new Vector3(0,0,0))));
+                    cube.addItem(Instantiate(Q5, new Vector3(X + 0.25f, 0.5f, Y), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 for (int i = 0; i < q6; i++)
-                    cube.addItem(Instantiate(Q6, new Vector3(X, 0.5f, Y), Quaternion.Euler(new Vector3(0,0,0))));
+                    cube.addItem(Instantiate(Q6, new Vector3(X + 0.25f, 0.5f, Y + 0.25f), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 return;
             }
         }
@@ -146,7 +153,7 @@ public class handleCommands : MonoBehaviour
             orientation = new Vector3(0, 270, 0);
         foreach (var team in all_teams) {
             if (team.name == N) {
-                team.addPlayer(new player(X, Y, n, O, Instantiate(player, new Vector3(X, 0.5f, Y), Quaternion.Euler(orientation))));
+                team.addPlayer(new player(X, Y, n, O, Instantiate(player, new Vector3(X, 0.5f, Y), Quaternion.Euler(orientation), parent)));
             }
         }
     }
@@ -226,19 +233,19 @@ public class handleCommands : MonoBehaviour
             if (block.X == newX && block.Y == newY) {
                 block.dropRessource(i);
                 if (i == 0)
-                    block.addItem(Instantiate(Q0, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0))));
+                    block.addItem(Instantiate(Q0, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 if (i == 1)
-                    block.addItem(Instantiate(Q1, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0))));
+                    block.addItem(Instantiate(Q1, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 if (i == 2)
-                    block.addItem(Instantiate(Q2, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0))));
+                    block.addItem(Instantiate(Q2, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 if (i == 3)
-                    block.addItem(Instantiate(Q3, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0))));
+                    block.addItem(Instantiate(Q3, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 if (i == 4)
-                    block.addItem(Instantiate(Q4, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0))));
+                    block.addItem(Instantiate(Q4, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 if (i == 5)
-                    block.addItem(Instantiate(Q5, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0))));
+                    block.addItem(Instantiate(Q5, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0)), parent));
                 if (i == 6)
-                    block.addItem(Instantiate(Q6, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0))));
+                    block.addItem(Instantiate(Q6, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,0,0)), parent));
             }
         }
     }
@@ -268,7 +275,13 @@ public class handleCommands : MonoBehaviour
 
     void MSG_PIE(int X, int Y, int R)
     {
-        //TODO
+        foreach (var team in all_teams) {
+            foreach (var player in team.players) {
+                if (player.X == X && player.Y == Y) {
+                    player.Nook.GetComponent<move>().Incantation();
+                }
+            }
+        }
     }
 
     void MSG_PFK(int n)
@@ -281,7 +294,7 @@ public class handleCommands : MonoBehaviour
                 if (player.n == n) {
                     newX = player.X;
                     newY = player.Y;
-                    all_eggs.Add(new egg(newX, newY, n, team.name, Instantiate(egg, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,180,0)))));
+                    all_eggs.Add(new egg(newX, newY, n, team.name, Instantiate(egg, new Vector3(newX, 0.5f, newY), Quaternion.Euler(new Vector3(0,180,0)), parent)));
                 }
             }
         }
@@ -304,7 +317,14 @@ public class handleCommands : MonoBehaviour
 
     void MSG_EBO(int e)
     {
-        //TODO
+        foreach (var _egg in all_eggs) {
+            if (_egg.e == e) {
+                MSG_PWN(e, _egg.X, _egg.Y, 1, 1, _egg.teamName);
+                Destroy(_egg.Egg);
+                all_eggs.Remove(_egg);
+                return;
+            }
+        }
     }
 
     void MSG_SEG(string N)
