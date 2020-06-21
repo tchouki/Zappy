@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Class\Team.cs" />
      <Compile Include="Assets\Scripts\Quit.cs" />
      <Compile Include="Assets\Scripts\Server.cs" />
+     <Compile Include="Assets\Scripts\Water.cs" />
      <Compile Include="Assets\Scripts\dialog.cs" />
      <Compile Include="Assets\Scripts\handleCommands.cs" />
      <Compile Include="Assets\Scripts\move.cs" />

@@ -46,6 +46,10 @@ public class handleCommands : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("space")) {
+            logText.enabled = !logText.enabled;
+        }
+
         if (Input.GetMouseButtonDown(0)) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit rayHit;
@@ -53,15 +57,17 @@ public class handleCommands : MonoBehaviour
                 if(rayHit.collider.tag == "cube") {
                     foreach (var cube in all_blocks.all) {
                         if (rayHit.collider.gameObject.transform.position == new Vector3(cube.X, 0, cube.Y)) {
-                            ressourcesText.text = "Apple : " + cube.nbr_q0;
-                            ressourcesText.text += "\nMoney : " + cube.nbr_q1;
-                            ressourcesText.text += "\nFossil : " + cube.nbr_q2;
-                            ressourcesText.text += "\nBamboo : " + cube.nbr_q3;
-                            ressourcesText.text += "\nRecipe : " + cube.nbr_q4;
-                            ressourcesText.text += "\nShell : " + cube.nbr_q5;
-                            ressourcesText.text += "\nStone : " + cube.nbr_q6;
+                            ressourcesText.text = "Food : " + cube.nbr_q0;
+                            ressourcesText.text += "\nLinemate : " + cube.nbr_q1;
+                            ressourcesText.text += "\nDeraumere : " + cube.nbr_q2;
+                            ressourcesText.text += "\nSibur : " + cube.nbr_q3;
+                            ressourcesText.text += "\nMendiane : " + cube.nbr_q4;
+                            ressourcesText.text += "\nPhiras : " + cube.nbr_q5;
+                            ressourcesText.text += "\nThystame : " + cube.nbr_q6;
                         }
                     }
+                } else {
+                    ressourcesText.text = "";
                 }
             }
         }
