@@ -18,6 +18,7 @@ public class handleCommands : MonoBehaviour
     public GameObject Q6;
     public Text endText;
     public Text logText;
+    public Text ressourcesText;
     public float TimeUnit;
     public List<egg> all_eggs;
     public List<team> all_teams;
@@ -27,6 +28,9 @@ public class handleCommands : MonoBehaviour
     private string serverMessage;
     private bool finish;    
     float t;
+    public Material teamBlueMaterial;
+    public Material teamGreenMaterial;
+    public Material teamPurpleMaterial;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +46,25 @@ public class handleCommands : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit rayHit;
+            if (Physics.Raycast(ray, out rayHit, 100.0f)) {
+                if(rayHit.collider.tag == "cube") {
+                    foreach (var cube in all_blocks.all) {
+                        if (rayHit.collider.gameObject.transform.position == new Vector3(cube.X, 0, cube.Y)) {
+                            ressourcesText.text = "Apple : " + cube.nbr_q0;
+                            ressourcesText.text += "\nMoney : " + cube.nbr_q1;
+                            ressourcesText.text += "\nFossil : " + cube.nbr_q2;
+                            ressourcesText.text += "\nBamboo : " + cube.nbr_q3;
+                            ressourcesText.text += "\nRecipe : " + cube.nbr_q4;
+                            ressourcesText.text += "\nShell : " + cube.nbr_q5;
+                            ressourcesText.text += "\nStone : " + cube.nbr_q6;
+                        }
+                    }
+                }
+            }
+        }
         t += Time.deltaTime;
         serverMessage += _server.GetComponent<sceneController>().receivedMessage;
         if (t >= TimeUnit && finish == false) {
@@ -154,6 +177,12 @@ public class handleCommands : MonoBehaviour
         foreach (var team in all_teams) {
             if (team.name == N) {
                 team.addPlayer(new player(X, Y, n, O, Instantiate(player, new Vector3(X, 0.5f, Y), Quaternion.Euler(orientation), parent)));
+                if (all_teams.IndexOf(team) == 1)
+                    team.players[team.players.Count - 1].Nook.transform.FindChild("Sphere").gameObject.GetComponent<Renderer>().material = teamBlueMaterial;
+                if (all_teams.IndexOf(team) == 2)
+                    team.players[team.players.Count - 1].Nook.transform.FindChild("Sphere").gameObject.GetComponent<Renderer>().material = teamGreenMaterial;
+                if (all_teams.IndexOf(team) == 3)
+                    team.players[team.players.Count - 1].Nook.transform.FindChild("Sphere").gameObject.GetComponent<Renderer>().material = teamPurpleMaterial;
             }
         }
     }

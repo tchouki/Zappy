@@ -12,6 +12,7 @@ TagManager:
   - Q2
   - Q1
   - Q0
+  - cube
   layers:
   - Default
   - TransparentFX
